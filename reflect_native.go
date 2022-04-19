@@ -398,6 +398,7 @@ func (codec *boolCodec) Decode(ptr unsafe.Pointer, iter *Iterator) {
 }
 
 func (codec *boolCodec) Encode(ptr unsafe.Pointer, stream *Stream) {
+	//通过指针来获取具体的值
 	stream.WriteBool(*((*bool)(ptr)))
 }
 

@@ -17,6 +17,7 @@ type StreamPool interface {
 }
 
 func (cfg *frozenConfig) BorrowStream(writer io.Writer) *Stream {
+	//buffer缓存
 	stream := cfg.streamPool.Get().(*Stream)
 	stream.Reset(writer)
 	return stream

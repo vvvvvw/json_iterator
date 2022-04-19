@@ -89,12 +89,16 @@ func (stream *Stream) WriteVal(val interface{}) {
 		stream.WriteNil()
 		return
 	}
+	//获取到 val的 reflect.type对象
 	cacheKey := reflect2.RTypeOf(val)
+	//获取编码器
 	encoder := stream.cfg.getEncoderFromCache(cacheKey)
 	if encoder == nil {
 		typ := reflect2.TypeOf(val)
+		//获取编码器
 		encoder = stream.cfg.EncoderOf(typ)
 	}
+	//获取指针
 	encoder.Encode(reflect2.PtrOf(val), stream)
 }
 

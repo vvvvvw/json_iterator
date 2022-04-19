@@ -104,6 +104,7 @@ func (cfg *frozenConfig) getDecoderFromCache(cacheKey uintptr) ValDecoder {
 }
 
 func (cfg *frozenConfig) getEncoderFromCache(cacheKey uintptr) ValEncoder {
+	//先从缓存中获取
 	encoder, found := cfg.encoderCache.Load(cacheKey)
 	if found {
 		return encoder.(ValEncoder)
@@ -296,6 +297,7 @@ func (cfg *frozenConfig) MarshalToString(v interface{}) (string, error) {
 func (cfg *frozenConfig) Marshal(v interface{}) ([]byte, error) {
 	stream := cfg.BorrowStream(nil)
 	defer cfg.ReturnStream(stream)
+	//序列化
 	stream.WriteVal(v)
 	if stream.Error != nil {
 		return nil, stream.Error

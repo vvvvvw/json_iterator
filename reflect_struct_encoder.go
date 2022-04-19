@@ -106,6 +106,7 @@ type structFieldEncoder struct {
 }
 
 func (encoder *structFieldEncoder) Encode(ptr unsafe.Pointer, stream *Stream) {
+	//通过指针和偏移量来获取字段值
 	fieldPtr := encoder.field.UnsafeGet(ptr)
 	encoder.fieldEncoder.Encode(fieldPtr, stream)
 	if stream.Error != nil && stream.Error != io.EOF {
@@ -144,6 +145,7 @@ type structFieldTo struct {
 func (encoder *structEncoder) Encode(ptr unsafe.Pointer, stream *Stream) {
 	stream.WriteObjectStart()
 	isNotFirst := false
+	//遍历每个字段来编码
 	for _, field := range encoder.fields {
 		if field.encoder.omitempty && field.encoder.IsEmpty(ptr) {
 			continue
